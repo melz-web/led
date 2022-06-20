@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack",
     "build:hot": "webpack serve",
+    "build:watch": "webpack watch",
     "serve": "node app/server/index.mjs",
     "serve:hot": "nodemon app/server/index.mjs"
   },

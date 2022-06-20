@@ -1,5 +1,6 @@
 import React from 'react';
+import OnSwitch from './OnSwitch.jsx';
 
-const App = () => (<h1>led</h1>);
+const App = () => (<OnSwitch />);
 
 export default App;

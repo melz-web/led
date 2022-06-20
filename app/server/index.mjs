@@ -16,8 +16,24 @@ const server = app.listen(process.env['PORT'], () => {
   console.log(`Listening on port ${process.env['PORT']}.`);
 });
 
+const state = new EventTarget();
+state.values = { on: false };
+
+const sockets = new Set();
+state.addEventListener('update', () => {
+  console.log(state.values);
+  sockets.forEach((socket) => {
+    socket.send(JSON.stringify(state.values));
+  });
+});
+
 const webSocketServer = new WebSocketServer({ server, path: '/state', });
-webSocketServer.on('connection', (webSocket) => {
-  console.log('connected');
-  webSocket.send(JSON.stringify({ test: 'state' }));
+webSocketServer.on('connection', (socket) => {
+  sockets.add(socket);
+  socket.on('message', (message) => {
+    state.values = { ...state.values, ...JSON.parse(message) };
+    state.dispatchEvent(new Event('update'));
+  });
+  socket.on('error', console.error);
+  socket.on('close', () => sockets.delete(socket));
 });
