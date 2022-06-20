@@ -33,7 +33,8 @@ module.exports = () => {
     devServer: {
       proxy: {
         context: '/state',
-        target: `ws://localhost:${8081}/state`
+        target: `ws://localhost:${process.env['PORT']}`,
+        ws: true
       }
     }
   };
