@@ -9,13 +9,8 @@ remote.state = { on: false, hue: 0, saturation: 0, value: 255 };
 remote.socket = new WebSocket(url);
 
 remote.socket.addEventListener('message', (message) => {
-  remote.state = { ...remote.state, ...JSON.parse(message.data) };
+  remote.state = JSON.parse(message.data);
   remote.dispatchEvent(new Event('update'));
-});
-
-remote.addEventListener('update', () => {
-  console.log('FROM UPDATE');
-  console.log(remote.state);
 });
 
 function useRemote(attribute) {

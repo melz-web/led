@@ -44,7 +44,7 @@ new WebSocketServer({ server, path: '/state' }).on('connection', (socket) => {
       success = false;
     }
     if (!(success))
-      pushWeb(socket);
+      pushWebSocket(socket);
   });
   socket.on('error', console.error);
   socket.on('close', () => webSockets.delete(socket));
