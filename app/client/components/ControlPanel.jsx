@@ -35,7 +35,7 @@ const ControlPanel = () => {
           <i className={'fas fa-fill'} />
         </PanelOption>
       </header>
-      <main className={'flex-grow-1 d-flex flex-column justify-content-center align-items-center p-3 gap-3'}>
+      <main className={'flex-grow-1 d-flex flex-column justify-content-center align-items-center p-5 gap-3'}>
         {(panel === 'on') ? (
           <Switch value={on} onChange={setOn} />
         ) : (panel === 'fill') ? (
