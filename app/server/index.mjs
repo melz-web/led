@@ -12,7 +12,7 @@ const publicPath = path.resolve(__dirname, '../../public');
 
 const app = express();
 app.use(express.static(publicPath));
-app.use((req, res) => res.sendFile(path.join(publicPath, 'index.html')));
+app.use((req, res) => res.sendFile(path.join(publicPath, 'index.html.ejs')));
 
 const server = app.listen(process.env['PORT'], () => {
   console.log(`Listening on port ${process.env['PORT']}.`);

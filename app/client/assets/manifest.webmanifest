@@ -1,0 +1,17 @@
+{
+  "short_name": "LED",
+  "name": "LED Controller",
+  "description": "Control panel for LED lights",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#212121",
+  "theme_color": "#212121",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "all"
+    }
+  ]
+}

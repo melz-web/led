@@ -21,12 +21,14 @@ module.exports = () => {
       rules: [
         { test: /\.(js|jsx)$/i, loader: 'babel-loader' },
         { test: /\.(css|scss)$/i, use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'] },
-        { test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i, type: 'asset' },
+        { test: /\.(eot|ttf|woff|woff2)$/i, type: 'asset' },
+        { test: /\.(svg|png|jpg|gif)/i, type: 'asset/resource' },
+        { test: /\.(webmanifest)$/i, type: 'asset/resource' }
       ]
     },
     plugins: compact([
       new EnvironmentPlugin(['NODE_ENV']),
-      new HtmlPlugin({ template: 'index.html' }),
+      new HtmlPlugin({ template: 'index.html.ejs' }),
       new MiniCssExtractPlugin(),
       (isProduction) && new WorkboxWebpackPlugin.GenerateSW()
     ]),
