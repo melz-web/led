@@ -1,0 +1,21 @@
+@import "./variables";
+
+.switch
+{
+  appearance: none;
+  all: unset;
+  height: 24px;
+  width: 24px;
+  padding: 4px 28px 4px 4px;
+  background-color: $gray-800;
+  background-image: linear-gradient(to top, $gray-100, $gray-100);
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  transition: 0.1s padding ease-in-out;
+
+  &:checked
+  {
+    background-color: $gray-700;
+    padding: 4px 4px 4px 28px;
+  }
+}

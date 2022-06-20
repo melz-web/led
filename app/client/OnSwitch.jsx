@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { useRemote } from './remote.js';
+import Switch from './Switch.jsx';
 
 const OnSwitch = () => {
   const [on, setOn] = useRemote('on');
-  const handleChange = useCallback((e) => setOn(e.currentTarget.checked), []);
-  return (<input type={'checkbox'} checked={on} onChange={handleChange} />)
+  return (<Switch type={'checkbox'} checked={on} onChange={setOn} />)
 };
 
 export default OnSwitch;
