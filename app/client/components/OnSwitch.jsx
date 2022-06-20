@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useRemote } from './remote.js';
+import { useRemote } from '../remote.js';
 import Switch from './Switch.jsx';
 
 const OnSwitch = () => {
