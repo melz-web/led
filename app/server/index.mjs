@@ -3,6 +3,8 @@ import express from 'express';
 import path from 'path';
 import url from 'url';
 import { WebSocketServer } from 'ws';
+import State from './State.mjs';
+import types from './types.mjs';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,24 +18,34 @@ const server = app.listen(process.env['PORT'], () => {
   console.log(`Listening on port ${process.env['PORT']}.`);
 });
 
-const state = new EventTarget();
-state.values = { on: false };
+// ====
 
-const sockets = new Set();
-state.addEventListener('update', () => {
-  console.log(state.values);
-  sockets.forEach((socket) => {
-    socket.send(JSON.stringify(state.values));
-  });
+const state = new State({
+  on: { type: types.boolean, initial: false },
+  hue: { type: types.uint8, initial: 0 },
+  saturation: { type: types.uint8, initial: 0 },
+  value: { type: types.uint8, initial: 255 }
 });
 
-const webSocketServer = new WebSocketServer({ server, path: '/state', });
-webSocketServer.on('connection', (socket) => {
-  sockets.add(socket);
+const pushWebSocket = (socket) => socket.send(JSON.stringify(state));
+
+// ====
+
+const webSockets = new Set();
+state.addEventListener('change', () => webSockets.forEach(pushWebSocket));
+new WebSocketServer({ server, path: '/state' }).on('connection', (socket) => {
+  pushWebSocket(socket);
+  webSockets.add(socket);
   socket.on('message', (message) => {
-    state.values = { ...state.values, ...JSON.parse(message) };
-    state.dispatchEvent(new Event('update'));
+    let success;
+    try {
+      success = state.update(JSON.parse(message));
+    } catch {
+      success = false;
+    }
+    if (!(success))
+      pushWeb(socket);
   });
   socket.on('error', console.error);
-  socket.on('close', () => sockets.delete(socket));
+  socket.on('close', () => webSockets.delete(socket));
 });

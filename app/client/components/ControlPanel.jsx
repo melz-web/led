@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useRemote } from '../remote.js'
-import gradient from '../util/gradient.js';
+import gradients from '../util/gradients.js';
 import PanelOption from './PanelOption.jsx';
 import Slider from './Slider.jsx';
 import Switch from './Switch.jsx';
@@ -14,13 +14,15 @@ const ControlPanel = () => {
   const [value, setValue] = useRemote('value');
 
   const hueStyle = useMemo(() => ({
-    backgroundImage: gradient.hue()
+    backgroundImage: gradients.hue()
   }), []);
+
   const saturationStyle = useMemo(() => ({
-    backgroundImage: gradient.saturation((hue / 255) * 360)
+    backgroundImage: gradients.saturation((hue / 255) * 360)
   }), [hue]);
+
   const valueStyle = useMemo(() => ({
-    backgroundImage: gradient.value((hue / 255) * 360, (saturation / 255) * 100)
+    backgroundImage: gradients.value((hue / 255) * 360, (saturation / 255) * 100)
   }), [hue, saturation]);
 
   return (
