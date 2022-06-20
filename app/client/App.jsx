@@ -1,5 +1,5 @@
 import React from 'react';
-import ControlPanel from './ControlPanel.jsx';
+import ControlPanel from './components/ControlPanel.jsx';
 
 const App = () => (
   <ControlPanel />

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
-import App from './components/App.jsx';
+import App from './App.jsx';
 import remote from './remote.js';
 import './index.scss';
 
