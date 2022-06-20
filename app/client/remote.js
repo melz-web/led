@@ -5,7 +5,7 @@ url.protocol = 'ws';
 url.pathname = 'state';
 
 const remote = new EventTarget();
-remote.state = { on: false };
+remote.state = { on: false, hue: 0, saturation: 0, value: 255 };
 remote.socket = new WebSocket(url);
 
 remote.socket.addEventListener('message', (message) => {
@@ -14,6 +14,7 @@ remote.socket.addEventListener('message', (message) => {
 });
 
 remote.addEventListener('update', () => {
+  console.log('FROM UPDATE');
   console.log(remote.state);
 });
 
@@ -22,7 +23,7 @@ function useRemote(attribute) {
 
   const setValue = useCallback((value) => {
     overrideValue(value);
-    remote.socket.send(JSON.stringify({ [attribute]: value }))
+    remote.socket.send(JSON.stringify({ [attribute]: value }));
   }, []);
 
   const handleMessage = useCallback(() => {

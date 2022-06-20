@@ -1,0 +1,27 @@
+@import '../variables';
+
+.slider {
+  all: unset;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  padding: 6px 0;
+  background-image: linear-gradient(to right, $gray-800, $gray-800);
+  background-origin: content-box;
+  background-repeat: no-repeat;
+
+  @mixin thumb {
+    appearance: none;
+    width: 8px;
+    height: 24px;
+    background: $gray-200;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+}

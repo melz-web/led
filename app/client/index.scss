@@ -3,8 +3,11 @@
 @import "bootstrap/scss/root";
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
+@import "bootstrap/scss/buttons";
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
 
 :root,
 body
