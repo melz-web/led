@@ -16,7 +16,8 @@ const server = app.listen(process.env['PORT'], () => {
   console.log(`Listening on port ${process.env['PORT']}.`);
 });
 
-const webSocketServer = new WebSocketServer({ server, path: '/ws', });
+const webSocketServer = new WebSocketServer({ server, path: '/state', });
 webSocketServer.on('connection', (webSocket) => {
   console.log('connected');
+  webSocket.send(JSON.stringify({ test: 'state' }));
 });

@@ -32,8 +32,8 @@ module.exports = () => {
     ]),
     devServer: {
       proxy: {
-        context: '/ws',
-        target: `http://localhost:${8081}`
+        context: '/state',
+        target: `ws://localhost:${8081}/state`
       }
     }
   };
