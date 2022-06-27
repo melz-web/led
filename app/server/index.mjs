@@ -1,5 +1,6 @@
 import '../../env.js';
 import express from 'express';
+import net from 'net';
 import path from 'path';
 import url from 'url';
 import { WebSocketServer } from 'ws';
@@ -28,6 +29,7 @@ const state = new State({
 });
 
 const pushWebSocket = (socket) => socket.send(JSON.stringify(state));
+const pushRawSocket = (socket) => socket.write(Buffer.from(state));
 
 // ====
 
@@ -49,3 +51,14 @@ new WebSocketServer({ server, path: '/state' }).on('connection', (socket) => {
   socket.on('error', console.error);
   socket.on('close', () => webSockets.delete(socket));
 });
+
+// ====
+
+const rawSockets = new Set();
+state.addEventListener('change', () => rawSockets.forEach(pushRawSocket));
+net.createServer((socket) => {
+  pushRawSocket(socket);
+  rawSockets.add(socket);
+  socket.on('error', console.error);
+  socket.on('close', () => rawSockets.delete(socket));
+}).listen(process.env['EMBED_PORT']);
