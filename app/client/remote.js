@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 const url = new URL(location.href);
-url.protocol = 'ws';
+url.protocol = 'wss';
 url.pathname = 'state';
 
 const remote = new EventTarget();

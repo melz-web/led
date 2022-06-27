@@ -8,11 +8,35 @@ module.exports = (shipit) => {
   shipitDeploy(shipit);
   shipit.initConfig({
     default: {
-      deployTo: '/srv/led-staging.benmelz.me',
       repositoryUrl: 'https://github.com/melz-web/led.git',
+      branch: 'main'
     },
-    staging: {
-      servers: 'vps.melz.me',
+    production: {
+      deployTo: '/srv/led.benmelz.me',
+      asUser: 'led',
+      servers: [
+        {
+          host: 'vps.melz.me',
+          user: 'root'
+        }
+      ],
     },
   });
+
+  shipit.blTask('build', async () => {
+    await new Promise((resolve, reject) => {
+      webpack(webpackConfig({ production: true }), (err, stats) => {
+        if (err || stats.hasErrors())
+          return reject(err);
+        resolve(stats);
+      });
+    });
+    shipit.emit('built');
+  });
+
+  shipit.on('deploy', async () => {
+    shipit.start('build');
+  });
+
+  shipit.on('deploy:finish')
 };
