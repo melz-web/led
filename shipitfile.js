@@ -37,6 +37,4 @@ module.exports = (shipit) => {
   shipit.on('deploy', async () => {
     shipit.start('build');
   });
-
-  shipit.on('deploy:finish')
 };
