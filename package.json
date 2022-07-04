@@ -10,6 +10,7 @@
     "serve": "node app/server/index.mjs",
     "serve:hot": "nodemon app/server/index.mjs",
     "prod:build": "NODE_ENV=production yarn run build",
+    "prod:deploy": "yarn run shipit production deploy",
     "prod:serve": "NODE_ENV=production yarn run serve"
   },
   "devDependencies": {

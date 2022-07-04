@@ -23,18 +23,21 @@ module.exports = (shipit) => {
     },
   });
 
-  shipit.blTask('build', async () => {
-    await new Promise((resolve, reject) => {
-      webpack(webpackConfig({ production: true }), (err, stats) => {
-        if (err || stats.hasErrors())
-          return reject(err);
-        resolve(stats);
-      });
-    });
+  shipit.blTask('deploy:install', async () => {
+    await shipit.remote(`cd ${shipit.releasePath} && yarn`);
+    shipit.emit('installed');
+  });
+
+  shipit.blTask('deploy:build', async () => {
+    await shipit.remote(`cd ${shipit.releasePath} && yarn run prod:build`);
     shipit.emit('built');
   });
 
-  shipit.on('deploy', async () => {
-    shipit.start('build');
+  shipit.on('updated', async () => {
+    shipit.start('deploy:install');
+  });
+
+  shipit.on('installed', async () => {
+    shipit.start('deploy:build');
   });
 };
