@@ -8,7 +8,9 @@
     "build:hot": "webpack serve",
     "build:watch": "webpack watch",
     "serve": "node app/server/index.mjs",
-    "serve:hot": "nodemon app/server/index.mjs"
+    "serve:hot": "nodemon app/server/index.mjs",
+    "prod:build": "NODE_ENV=production build",
+    "prod:serve": "NODE_ENV=production serve"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
